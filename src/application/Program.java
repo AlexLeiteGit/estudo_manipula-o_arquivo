@@ -1,6 +1,7 @@
 package application;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -8,14 +9,18 @@ public class Program {
 
 	public static void main(String[] args) {
 		
-		File file = new File("D:\\temp\\teste.txt");
-		Scanner sc = null;
+		String path = "D:\\temp\\teste.txt";
+		BufferedReader br = null;
+		FileReader fr = null;
 		
 		try {
 			
-			sc = new Scanner(file);
-			while (sc.hasNextLine()) {
-				System.out.println(sc.nextLine());
+			fr = new FileReader(path);
+			br = new BufferedReader(fr);
+			String line = br.readLine();
+			while (line != null) {
+				System.out.println(line);
+				line = br.readLine();
 			}
 			
 		}
@@ -23,11 +28,17 @@ public class Program {
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if (sc != null) {
-				sc.close();
+			try {
+				if (br != null) {
+					br.close();
+				} if (fr != null) {
+					fr.close();
+			}
+			}
+			catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-
 	}
 
 }
